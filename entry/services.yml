@@ -1,0 +1,8 @@
+apps:
+  - name      : 'SpaCy Server'
+    cwd       : '/app'
+    script    : 'bin/spacy'
+
+  - name      : 'SpaCy JSON Api'
+    cwd       : '/app'
+    script    : 'bin/www'

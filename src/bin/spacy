@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+
+const spacyNLP = require('spacy-nlp');
+spacyNLP.server({port: process.env.IOPORT}).then(() => {
+    console.log("Spacy up and running.");
+});

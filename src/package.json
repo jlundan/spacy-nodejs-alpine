@@ -1,0 +1,10 @@
+{
+  "name": "spacy-json-service",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4",
+    "spacy-nlp": "^1.0.7"
+  }
+}

@@ -1,5 +1,7 @@
 FROM node:8.5.0-alpine
 
+ARG SPACY_VERSION
+
 ENV LANG en
 ENV PORT 3000
 
@@ -20,7 +22,7 @@ RUN apk update && apk add --no-cache python3 tini bash libgomp && \
     pip3 install --upgrade pip setuptools && \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
 
-    python3 -m pip install -U socketIO-client spacy && \
+    python3 -m pip install -U socketIO-client spacy==${SPACY_VERSION} && \
     python3 -m spacy.${LANG}.download && \
 
     npm install --loglevel=warn pm2 -g && \
@@ -35,7 +37,9 @@ RUN apk update && apk add --no-cache python3 tini bash libgomp && \
 
     rm -r /usr/lib/python*/ensurepip && \
     rm -r /root/.cache && \
-    rm -r /root/.npm
+    rm -r /root/.npm && \
+
+    pip show spacy > /etc/spacy_info
 
 EXPOSE ${PORT}
 

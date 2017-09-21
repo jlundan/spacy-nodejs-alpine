@@ -5,6 +5,7 @@
   "dependencies": {
     "body-parser": "^1.18.1",
     "express": "^4.15.4",
-    "spacy-nlp": "^1.0.7"
+    "spacy-nlp": "^1.0.7",
+    "winston": "^2.3.1"
   }
 }

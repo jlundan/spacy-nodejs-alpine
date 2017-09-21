@@ -2,7 +2,7 @@ A docker container which runs SpaCy and NodeJS API
 
 ### Build ###
 ```
-docker build -t [tag]:[version] .
+docker build -t [tag]:[version] --build-arg SPACY_VERSION=1.9.0 .
 ```
 
 ### Run ###

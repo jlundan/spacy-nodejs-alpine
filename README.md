@@ -1,5 +1,7 @@
 A docker container which runs SpaCy and NodeJS API
 
+Prebuilt Docker images available at [https://hub.docker.com/r/jlundan/spacy-nodejs-alpine/](https://hub.docker.com/r/jlundan/spacy-nodejs-alpine/)
+
 ### Build ###
 ```
 docker build -t [tag]:[version] --build-arg SPACY_VERSION=1.9.0 .

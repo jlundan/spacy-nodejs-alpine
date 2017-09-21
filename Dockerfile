@@ -4,6 +4,7 @@ ARG SPACY_VERSION
 
 ENV LANG en
 ENV PORT 3000
+ENV SPACY_LOG_LEVEL error
 
 COPY ./src /app
 COPY ./entry/services.yml /services.yml

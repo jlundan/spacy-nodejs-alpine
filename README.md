@@ -12,7 +12,7 @@ docker run -p [public port]:3000 [tag]:[version]
 
 ### Process a sentence ###
 ```
-curl -X POST -H "Content-Type: application/json" --data '{"input": "This is test."}' http://localhost:[public port]
+curl -X POST -H "Content-Type: application/json" --data '{"input": "This is a test."}' http://localhost:[public port]
 ```
 (if you are running on Windows or Mac, use your ip address instead of localhost)
 
@@ -20,16 +20,17 @@ You should receive about following response
 
 ```json
 {
-  "text": "This is test.",
-  "len": 4,
+  "text": "This is a test.",
+  "len": 5,
   "tokens": [
     "This",
     "is",
+    "a",
     "test",
     "."
   ],
   "noun_phrases": [
-    "test"
+    "a test"
   ],
   "parse_tree": [
     {
@@ -56,7 +57,17 @@ You should receive about following response
           "POS_fine": "NN",
           "POS_coarse": "NOUN",
           "arc": "attr",
-          "modifiers": []
+          "modifiers": [
+            {
+              "word": "a",
+              "lemma": "a",
+              "NE": "",
+              "POS_fine": "DT",
+              "POS_coarse": "DET",
+              "arc": "det",
+              "modifiers": []
+            }
+          ]
         },
         {
           "word": ".",
@@ -84,6 +95,13 @@ You should receive about following response
       "NE": "",
       "POS_fine": "VBZ",
       "POS_coarse": "VERB"
+    },
+    {
+      "word": "a",
+      "lemma": "a",
+      "NE": "",
+      "POS_fine": "DT",
+      "POS_coarse": "DET"
     },
     {
       "word": "test",

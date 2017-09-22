@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
             }
 
             let response = {
-                title: 'SpaCy JSON service',
+                title: 'spaCy JSON service',
                 spacyInfo: {}
             };
 

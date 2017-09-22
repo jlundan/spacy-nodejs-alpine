@@ -3,12 +3,29 @@ This docker container runs [spaCy](https://spacy.io/) behind NodeJS API allowing
 Prebuilt Docker images are available at [https://hub.docker.com/r/jlundan/spacy-nodejs-alpine/](https://hub.docker.com/r/jlundan/spacy-nodejs-alpine/)
 ## Supported tags and Dockerfile links
 
-* 1.0.0, latest [(1.0.0/Dockerfile)](https://github.com/jlundan/spacy-nodejs-alpine/blob/1.0.0/Dockerfile)
+* 1.0.0, latest [(1.0.0/Dockerfile)](https://github.com/jlundan/spacy-nodejs-alpine/blob/1.0.0/Dockerfile) - spaCy version [1.9.0](https://github.com/explosion/spaCy/releases/tag/v1.9.0)
 
 ## Examples ##
 ### Running ###
 ```
 docker run -p 5000:3000 jlundan/spacy-nodejs-alpine
+```
+
+### Get some info about the API ###
+```
+curl -H "Content-Type: application/json" http://localhost:5000
+```
+
+You should receive following kind of response
+```json
+{
+  "title": "spaCy JSON service",
+  "spacyInfo": {
+    "name": "spacy",
+    "version": "1.9.0",
+    "website": "https://spacy.io/"
+  }
+}
 ```
 
 ### Processing a sentence ###

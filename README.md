@@ -1,24 +1,23 @@
-A docker container which runs SpaCy and NodeJS API
+This docker container runs [spaCy](https://spacy.io/) behind NodeJS API allowing clients to communicate with spaCy via HTTP requests.
 
-Prebuilt Docker images available at [https://hub.docker.com/r/jlundan/spacy-nodejs-alpine/](https://hub.docker.com/r/jlundan/spacy-nodejs-alpine/)
+Prebuilt Docker images are available at [https://hub.docker.com/r/jlundan/spacy-nodejs-alpine/](https://hub.docker.com/r/jlundan/spacy-nodejs-alpine/)
+## Supported tags and Dockerfile links
 
-### Build ###
+* 1.0.0, latest [(1.0.0/Dockerfile)](https://github.com/jlundan/spacy-nodejs-alpine/blob/1.0.0/Dockerfile)
+
+## Examples ##
+### Running ###
 ```
-docker build -t [tag]:[version] --build-arg SPACY_VERSION=1.9.0 .
+docker run -p 5000:3000 jlundan/spacy-nodejs-alpine
 ```
 
-### Run ###
+### Processing a sentence ###
 ```
-docker run -p [public port]:3000 [tag]:[version]
+curl -X POST --data '{"input": "This is a test."}' \
+    -H "Content-Type: application/json" http://localhost:5000
 ```
 
-### Process a sentence ###
-```
-curl -X POST -H "Content-Type: application/json" --data '{"input": "This is a test."}' http://localhost:[public port]
-```
-(if you are running on Windows or Mac, use your ip address instead of localhost)
-
-You should receive about following response
+You should receive following response
 
 ```json
 {
@@ -121,4 +120,8 @@ You should receive about following response
     }
   ]
 }
+```
+### Building ###
+```
+docker build -t [tag]:[version] --build-arg SPACY_VERSION=[spacy version] .
 ```

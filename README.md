@@ -13,7 +13,7 @@ docker run -p 5000:3000 jlundan/spacy-nodejs-alpine
 
 ### Get some info about the API ###
 ```
-curl -H "Content-Type: application/json" http://localhost:5000
+curl http://localhost:5000
 ```
 
 You should receive following kind of response

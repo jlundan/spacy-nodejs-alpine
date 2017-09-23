@@ -3,6 +3,8 @@ let router = express.Router();
 const spacyNLP = require('spacy-nlp');
 const nlp = spacyNLP.nlp;
 let fs = require('fs');
+let Promise = require('bluebird');
+let ResponseFilter = require('../util/response-filter');
 
 router.get('/', (req, res, next) => {
     try {
@@ -32,23 +34,60 @@ router.get('/', (req, res, next) => {
             res.send(response);
         });
     } catch (e) {
-        next(e);
+        return next(e);
     }
 });
 
 router.post('/', (req, res, next) => {
     let body = req.body;
 
-    if (body && body.input) {
-        nlp.parse(body.input).then((output) => {
-            res.send(output[0]);
-        }).catch((e) => {
-            next(e);
-        });
-    } else {
+    if(!body) {
+        let error = {message: "Missing request body"};
+        error.status = 400;
+        return next(error);
+    }
+
+    if(typeof body.input === "undefined") {
         let error = {message: "Missing field: input"};
         error.status = 400;
-        next(error);
+        return next(error);
+    }
+
+    if(body.exclude && !Array.isArray(body.exclude)) {
+        let error = {message: "Exclude parameter must be an array"};
+        error.status = 400;
+        return next(error);
+    }
+
+    let responseFilter = new ResponseFilter(body.exclude);
+
+    if (Array.isArray(body.input)) {
+        let requests = [];
+        for (let item of body.input) {
+            requests.push(nlp.parse(item));
+        }
+        Promise.all(requests).then((responses) => {
+            res.send(responses.map((response) => {
+                return responseFilter.filter(response[0]);
+            }));
+        }).catch((e) => {
+            return next(e);
+        });
+    } else {
+        try{
+            nlp.parse(body.input).then((response) => {
+                if(!response || !Array.isArray(response) || response.length === 0) {
+                    res.send([]);
+                    return;
+                }
+                res.send([responseFilter.filter(response[0])]);
+            }).catch((e) => {
+                return next(e);
+            });
+        } catch (err){
+            return next(err);
+        }
+
     }
 });
 

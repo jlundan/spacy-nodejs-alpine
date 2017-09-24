@@ -53,6 +53,11 @@ router.post('/', (req, res, next) => {
         return next(error);
     }
 
+    if(body.input === "" || (Array.isArray(body.input) && body.input.length === 0)) {
+        res.send([]);
+        return;
+    }
+
     if(body.exclude && !Array.isArray(body.exclude)) {
         let error = {message: "Exclude parameter must be an array"};
         error.status = 400;
@@ -68,6 +73,9 @@ router.post('/', (req, res, next) => {
         }
         Promise.all(requests).then((responses) => {
             res.send(responses.map((response) => {
+                if(!response || !Array.isArray(response) || response.length === 0) {
+                    return [];
+                }
                 return responseFilter.filter(response[0]);
             }));
         }).catch((e) => {

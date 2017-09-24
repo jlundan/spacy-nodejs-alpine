@@ -27,6 +27,8 @@ RUN apk update && apk add --no-cache python3 tini bash libgomp && \
     python3 -m spacy.${LANG}.download && \
     pip show spacy > /etc/spacy_info && \
 
+    npm install --loglevel=warn npm@4.6.1 -global && \
+
     npm install --loglevel=warn pm2 -g && \
     cd /app && \
     npm install --loglevel=warn && \

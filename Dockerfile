@@ -25,10 +25,16 @@ RUN apk update && apk add --no-cache python3 tini bash libgomp && \
 
     python3 -m pip install -U socketIO-client spacy==${SPACY_VERSION} && \
     python3 -m spacy.${LANG}.download && \
+    pip show spacy > /etc/spacy_info && \
 
     npm install --loglevel=warn pm2 -g && \
+    cd /app && \
+    npm install --loglevel=warn && \
 
-    cd /app && npm install --loglevel=warn && \
+    `nohup node bin/spacy >/dev/null 2>/dev/null &` && \
+    sleep 5 && \
+    npm test && \
+    npm prune --production && \
 
     apk del .build-deps \
         build-base \
@@ -38,9 +44,7 @@ RUN apk update && apk add --no-cache python3 tini bash libgomp && \
 
     rm -r /usr/lib/python*/ensurepip && \
     rm -r /root/.cache && \
-    rm -r /root/.npm && \
-
-    pip show spacy > /etc/spacy_info
+    rm -r /root/.npm
 
 EXPOSE ${PORT}
 

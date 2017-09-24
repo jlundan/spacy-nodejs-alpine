@@ -33,9 +33,9 @@ RUN apk update && apk add --no-cache python3 tini bash libgomp && \
     cd /app && \
     npm install --loglevel=warn && \
 
-    `nohup node bin/spacy >/dev/null 2>/dev/null &` && \
-    sleep 5 && \
-    npm test && \
+    # `nohup node bin/spacy >/dev/null 2>/dev/null &` && \
+    # sleep 5 && \
+    # npm test && \
     npm prune --production && \
 
     apk del .build-deps \

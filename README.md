@@ -37,7 +37,7 @@ curl -X POST --data '{"input": "This is a test."}' \
 You should receive following response
 
 ```json
-{
+[{
   "text": "This is a test.",
   "len": 5,
   "tokens": [
@@ -136,8 +136,17 @@ You should receive following response
       "POS_coarse": "PUNCT"
     }
   ]
-}
+}]
 ```
+### Processing multiple sentences ###
+```
+curl -X POST --data '{"input": ["This is a test.", "This is another test, it has \"quotes\" in it."]}' \
+    -H "Content-Type: application/json" http://localhost:5000
+```
+
+The response is similar than with processing single sentence. Responses are returned for each sentence in the input array
+in the same order input sentences were given.
+
 ### Building ###
 ```
 docker build -t [tag]:[version] --build-arg SPACY_VERSION=[spacy version] .
